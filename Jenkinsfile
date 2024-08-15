@@ -30,4 +30,5 @@ pipeline {
                 echo 'Artifact Creation Completed'
             }
         }
+    }
 }
