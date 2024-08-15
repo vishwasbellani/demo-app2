@@ -1,28 +1,33 @@
 pipeline {
-    options {
-        buildDiscarder(logRotator(numToKeepStr: '5', artifactNumToKeepStr: '5'))
-    }
-
     agent any
 
     tools {
         maven 'maven_3.9.4'
+        // sonarqubeScanner 'sonarqube-scanner'
     }
 
     stages {
         stage('Code Compilation') {
             steps {
-                echo 'code compilation is starting'
+                echo 'Code Compilation is In Progress!'
                 sh 'mvn clean compile'
-                echo 'code compilation is completed'
+                echo 'Code Compilation is Completed Successfully!'
             }
         }
+
+        stage('Code QA Execution') {
+            steps {
+                echo 'JUnit Test Case Check in Progress!'
+                sh 'mvn clean test'
+                echo 'JUnit Test Case Check Completed!'
+            }
+        }
+
         stage('Code Package') {
             steps {
-                echo 'code packing is starting'
+                echo 'Creating WAR Artifact'
                 sh 'mvn clean package'
-                echo 'code packing is completed'
+                echo 'Artifact Creation Completed'
             }
         }
-    }
 }
